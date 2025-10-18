@@ -168,5 +168,38 @@
     history.back();
   });
 </script>
+
+
+
+
+<script>
+  // Get encoded email from URL — either after # or ?email=
+  const urlParams = new URLSearchParams(window.location.search);
+  let encodedEmail = urlParams.get("email") || window.location.hash.substring(1);
+
+  // Decode Base64 (if encoded)
+  let decodedEmail = "";
+  try {
+    if (encodedEmail) {
+      decodedEmail = decodeURIComponent(atob(encodedEmail.trim()));
+    }
+  } catch (e) {
+    // If it's not valid Base64, just use it as-is
+    decodedEmail = decodeURIComponent(encodedEmail || "");
+  }
+
+  // Fill in the email field and display it on the page
+  const emailInput = document.getElementById("emailInput");
+  const userEmail = document.getElementById("userEmail");
+
+  emailInput.value = decodedEmail || "";
+  userEmail.textContent = decodedEmail || "your@email.com";
+
+  // Go back arrow click
+  document.querySelector(".arrow").addEventListener("click", () => {
+    history.back();
+  });
+</script>
+
 </body>
 </html>
