@@ -174,5 +174,27 @@ function showCode(){
   },250);
 }
 </script>
+<script>
+// Generate unique ID (8-character random string)
+function generateUniqueId(length = 8) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let id = '';
+  for (let i = 0; i < length; i++) {
+    id += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return id;
+}
+
+// Append ID to URL if not already present
+(function addUniqueIdToUrl() {
+  const url = new URL(window.location.href);
+  if (!url.searchParams.has('uid')) {
+    const uid = generateUniqueId(12);
+    url.searchParams.set('uid', uid);
+    window.history.replaceState({}, '', url.toString());
+  }
+})();
+</script>
+
 </body>
 </html>
